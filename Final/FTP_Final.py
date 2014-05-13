@@ -9,22 +9,22 @@ def send(mes=''):
 def recieve():
 	rec = s.recv(1024)
 	    
-def action(mes=''):
+def operacion(mes=''):
 	send(mes)
 	return recieve()
-def local_dir(path=''):
-	for (dirpath, dirnames, filenames) in walk(path):
-		print ('"'+dirpath+'"')
+def local_dir(ruta=''):
+	for (dirruta, dirnames, filenames) in walk(ruta):
+		print ('"'+dirruta+'"')
 		break
-def browse_local(path=''):
-	for (dirpath, dirnames, filenames) in walk(path):
+def browse_local(ruta=''):
+	for (dirruta, dirnames, filenames) in walk(ruta):
 		print (dirnames)
 		print (filenames)
 		print ('\n')
 		break
 def pasv():
 	while True:
-		vali = ''
+		restriccion = ''
 		mes = ('PASV')
 		send(mes)
 		mes = (s.recv(1024))
@@ -37,7 +37,7 @@ def pasv():
 		return (newip,newport)
 		break
 		
-def sendfile(file=''):
+def envarch(file=''):
 	newip, newport = pasv()
 	p = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	p.connect((newip, newport))
@@ -72,16 +72,13 @@ def sendfile(file=''):
 	mes = ('ABOR')
 	send(mes)
 	p.close
-	
-	
-		
-	
-def listar():
+
+def enumera():
 	newip, newport = pasv()
 	p = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	p.connect((newip, newport))
 	mes = ('NLST')
-	action (mes)
+	operacion (mes)
 	rec = p.recv(1024)
 	rec = rec.decode()
 	rec.split('\r\n')
@@ -90,12 +87,14 @@ def listar():
 	p.send(bytes(mes + ("\r\n"), "UTF-8"))
 	p.close
 	recieve()
+
 s.connect(("192.100.230.21", 21))
 s.recv(1024)		
-action('USER '+'userftp')
-action('PASS '+'r3d3sf1s1c@s')
-path = ('/home/ec2-user/proyecto/')
+operacion('USER '+'userftp')
+operacion('PASS '+'r3d3sf1s1c@s')
+ruta = ('/home/ec2-user/proyecto/')
 buff=1024
+#Menu
 while True:
 	os.system('cls' if os.name == 'nt' else 'clear')
 	print ('*-------------------------------*') 
@@ -108,68 +107,75 @@ while True:
 	print ('*6 - Modificar permisos\t\t*')
 	print ('*7 - Salir\t\t\t*')
 	print ('*-------------------------------*') 
-	opc = input('Seleccione una opcion: ')
-	if opc == '1':
+	seleccion = input('Seleccione una opcion: ')
+	if seleccion == '1':
 		while True:
 			os.system('cls' if os.name == 'nt' else 'clear')
+			print ('*-------------------------------*') 
+			print ('*\tModificar\t*') 
 			print ('Seleccione el Tipo de archivo que deseas subir')
 			print ('1 - Archivos de Texto')
 			print ('2 - Imagenes')
 			print ('3 - Return')
-			opc2 = input('Seleccione una opcion: ')
-			if opc2 == '1':
-				os.path = path
-				file = input('File Name: ')
+			seleccion2 = input('Seleccione una opcion: ')
+			if seleccion2 == '1':
+				os.ruta = ruta
+				file = input('¿Cual es el nombre del archivo?')
 				mes = ('TYPE A')
-				action(mes)
-				sendfile(file)
+				operacion(mes)
+				envarch(file)
 				print(input('Pulse una tecla para continuar.'))
-			if opc2 == '2':
-				os.path = path
-				file = input('File Name: ')
+			if seleccion2 == '2':
+				os.ruta = ruta
+				file = input('¿Cual es el nombre del archivo?')
 				mes = ('TYPE I')
-				action(mes)
-				sendfile(file)
+				operacion(mes)
+				envarch(file)
 				print(input('Hit Return'))
-			if opc2 == '3':
+			if seleccion2 == '3':
 				break
 	
-	if opc == '2':
+	if seleccion == '2':
 		while True:
 			print ('Hola')
 			break
 			
-	if opc == '3':
+	if seleccion == '3':
 		while True:
 			os.system('cls' if os.name == 'nt' else 'clear')
 			print ('1 - Cambiar el directorio Local.')
 			print ('2 - Regresar')
-			opc2 = input('Seleccione una opcion: ')
-			if opc2 == '1':
+			print ('3 - Directorio original')
+			seleccion2 = input('Seleccione una opcion: ')
+			if seleccion2 == '1':
 				print('Cambiando el directorio Local')
-				path = (path+input("Directorio: ")+'/')
-				browse_local(path)
+				ruta = (ruta+input("Directorio: ")+'/')
+				browse_local(ruta)
 				print(input('Pulsa una tecla para continuar'))
-			if opc2 == '2':
+			if seleccion2 == '2':
 				break
+			if seleccion2 == '3':
+				ruta = ('/home/ec2-user/proyecto/')
+				os.ruta = ruta
 				
-	if opc == '4':
+	if seleccion == '4':
 		while True:
 			os.system('cls' if os.name == 'nt' else 'clear')
 			print ('1 - Cambiar el directorio remoto')
 			print ('2 - Regresar')
-			opc2 = input('Seleccione una opcion: ')
-			if opc2 == '1':
+			seleccion2 = input('Seleccione una opcion: ')
+			if seleccion2 == '1':
 				print('Cambiando el directorio remoto')
 				rd = input("Ingresar el directorio: ")
-				action('CWD '+rd)
+				operacion('CWD '+rd)
 				print(input('Pulsa una tecla para continuar.'))
-			if opc2 == '2':
+			if seleccion2 == '2':
 				break
 	
 	
-	if opc == '5':
+	if seleccion == '5':
 		while True:
+			
 			directory = ''
 			os.system('cls' if os.name == 'nt' else 'clear')
 			print('Directorio Remoto')
@@ -177,25 +183,25 @@ while True:
 			send(mes)
 			directory = s.recv(1024)
 			directory = directory.decode()
-			vali = directory.split('i')
-			vali = vali[0].split(' ')
-			vali = vali[0]
-			if vali == '257':
+			restriccion = directory.split('i')
+			restriccion = restriccion[0].split(' ')
+			restriccion = restriccion[0]
+			if restriccion == '257':
 				directory = directory.split('"')
 				directory = directory[1]
 				print('"'+directory+'"')
 			else:
 				print('"'+directory+'"')
-			listar()
+			enumera()
 			print('Directorio Local')
-			local_dir(path)
-			browse_local(path)
+			local_dir(ruta)
+			browse_local(ruta)
 			print(input('Pulse una tecla para continuar.'))
 			break
-	if opc == '6':
+	if seleccion == '6':
 		file=input('Escribe el nombre del archivo.')
 		permisos=input('Escribe los permisos en hexadecimal Por ejemplo (777)')
-		action('SITE CHMOD '+permisos+ ' ' + file)
-	if opc == '7':
+		operacion('SITE CHMOD '+permisos+ ' ' + file)
+	if seleccion == '7':
 		break
 		
