@@ -95,7 +95,7 @@ def top():
 def exit():
     sys.exit(1)
 def ejemplo():
-        screen = curses.initscr()
+	screen = curses.initscr()
         screen.nodelay(1)
         dims = screen.getmaxyx()
         q=-1
@@ -142,7 +142,8 @@ def conexion():
         		break
  
 #Imprimimos la palabra Adios para cuando se cierre la conexion
-#print('Adios')
+	print "Adios."
+ 
 #Cerramos la instancia del objeto servidor
 	s.close()
 

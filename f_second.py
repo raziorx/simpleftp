@@ -1,4 +1,4 @@
-!/usr/bin/python3
+#!/usr/bin/python3
 # A simple FTP client.
 #
 # The information to write this program was gathered from RFC 959,
