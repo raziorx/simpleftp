@@ -119,32 +119,11 @@ while True:
 			opc2 = input('Seleccione una opcion: ')
 			if opc2 == '1':
 				os.path = path
-				print(path)
 				file = input('File Name: ')
 				mes = ('TYPE A')
 				action(mes)
 				sendfile(file)
-				print(input('Hit Return'))
-								os.path = path
-				file = input('File Name: ')
-				mes = ('TYPE A')
-				send(mes)
-				while True:
-					vali = recieve()
-					vali = vali.decode()
-					vali = vali.split("'")
-					vali = vali[0].split(' ')
-					vali = vali[0]
-					if vali == '226':
-						mes = ('ABOR')
-						action(mes)
-						recieve()
-						break
-					else:
-						break
-				action(mes)
-				sendfile(file)
-				print(input('Hit Return'))
+				print(input('Pulse una tecla para continuar.'))
 			if opc2 == '2':
 				os.path = path
 				file = input('File Name: ')
@@ -163,7 +142,7 @@ while True:
 	if opc == '3':
 		while True:
 			os.system('cls' if os.name == 'nt' else 'clear')
-			print ('1 - Change Local Directory')
+			print ('1 - Cambiar el directorio Local.')
 			print ('2 - Regresar')
 			opc2 = input('Seleccione una opcion: ')
 			if opc2 == '1':
@@ -193,7 +172,7 @@ while True:
 		while True:
 			directory = ''
 			os.system('cls' if os.name == 'nt' else 'clear')
-			print('Remote Directory')
+			print('Directorio Remoto')
 			mes = ('PWD')
 			send(mes)
 			directory = s.recv(1024)
@@ -208,14 +187,14 @@ while True:
 			else:
 				print('"'+directory+'"')
 			listar()
-			print('Local Directory')
+			print('Directorio Local')
 			local_dir(path)
 			browse_local(path)
-			print(input('Hit Return'))
+			print(input('Pulse una tecla para continuar.'))
 			break
 	if opc == '6':
-		file=input('File name')
-		permisos=input('Write permissions in hexadecimal, Example (777)')
+		file=input('Escribe el nombre del archivo.')
+		permisos=input('Escribe los permisos en hexadecimal Por ejemplo (777)')
 		action('SITE CHMOD '+permisos+ ' ' + file)
 	if opc == '7':
 		break
