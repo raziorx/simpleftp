@@ -90,15 +90,9 @@ def listar():
 	p.send(bytes(mes + ("\r\n"), "UTF-8"))
 	p.close
 	recieve()
-#s.connect((input("Enter FTP Address: "), 21))
 s.connect(("192.100.230.21", 21))
 s.recv(1024)		
-		
-#usern = input("Enter user: ")
-#action('USER '+usern)
 action('USER '+'userftp')
-#passw = input("Enter password: ")
-#action('PASS '+passw)
 action('PASS '+'r3d3sf1s1c@s')
 path = ('/home/ec2-user/proyecto/')
 buff=1024
@@ -110,7 +104,7 @@ while True:
 	print ('*2 - Recibir archivos\t\t*') 
 	print ('*3 - Cambiar directorio local\t*')
 	print ('*4 - Cambiar directorio Remoto\t*')
-	print ('*5 - Imprimir directorio\t*') 
+	print ('*5 - Imprimir directorios\t*') 
 	print ('*6 - Modificar permisos\t\t*')
 	print ('*7 - Salir\t\t\t*')
 	print ('*-------------------------------*') 
@@ -128,6 +122,26 @@ while True:
 				print(path)
 				file = input('File Name: ')
 				mes = ('TYPE A')
+				action(mes)
+				sendfile(file)
+				print(input('Hit Return'))
+								os.path = path
+				file = input('File Name: ')
+				mes = ('TYPE A')
+				send(mes)
+				while True:
+					vali = recieve()
+					vali = vali.decode()
+					vali = vali.split("'")
+					vali = vali[0].split(' ')
+					vali = vali[0]
+					if vali == '226':
+						mes = ('ABOR')
+						action(mes)
+						recieve()
+						break
+					else:
+						break
 				action(mes)
 				sendfile(file)
 				print(input('Hit Return'))
@@ -200,7 +214,9 @@ while True:
 			print(input('Hit Return'))
 			break
 	if opc == '6':
-		action('SITE CHMOD '+input_var + ' ' + pof)
+		file=input('File name')
+		permisos=input('Write permissions in hexadecimal, Example (777)')
+		action('SITE CHMOD '+permisos+ ' ' + file)
 	if opc == '7':
 		break
 		
