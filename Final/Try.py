@@ -4,6 +4,39 @@ import os
 import time
 from os import walk
 s = socket.socket()
+
+def baja(nof):
+    sock_pasv = pasv()
+    sock_main.relay("RETR " + nof)
+    aux = "A"
+    if modo == 'A':
+        target = open (nof, 'w') ## a will append, w will over-write 
+    else:
+        target = open (nof, 'wb') ## a will append, w will over-write 
+    #writing the entered content to the file we just created
+    while aux != "":
+        aux = sock_pasv.recv()
+        if modo == 'A':
+            aux = aux.decode()
+            target.write(aux)
+        else:
+            target.write(aux)
+
+
+def test(no):
+	newip, newport = pasv()
+	p = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	p.connect((newip, newport))
+	send('STOR '+no)
+	
+	aux = "A"
+   # sock_main.relay("RETR " + no)
+	target = open (no, 'w') 
+	while aux != "":
+		aux = p.recv(1024)
+		aux = aux.decode()
+		target.write(aux)
+			
 def send(mes=''):
 	s.send(bytes(mes + ("\r\n"), "UTF-8"))
 def recieve():
@@ -49,6 +82,7 @@ def envarch(file=''):
 	packs = size/1024
 	timeb = 100/packs
 	i=0
+	print (packs)
 	while opened:
 		i=i+timeb
 		time.sleep(.5)
@@ -89,8 +123,6 @@ def enumera():
 s.connect(("192.100.230.21", 21))
 s.recv(1024)	
 def login():
-	os.system('cls' if os.name == 'nt' else 'clear')
-	print('Bienvenido usuario ¿Cual es su usuario y constraseña?')
 	us=input('Dame tu usuario: ')
 	operacion('USER '+us)
 	ps=input('Dame tu password: ')
@@ -136,13 +168,36 @@ while True:
 				mes = ('TYPE I')
 				operacion(mes)
 				envarch(file)
-				print(input('Pulse para continuar.'))
+				print(input('Hit Return'))
 			if seleccion2 == '3':
 				break
 	
 	if seleccion == '2':
 		while True:
-			print ('Hola')
+			os.system('cls' if os.name == 'nt' else 'clear')
+			print ('*-------------------------------*') 
+			print ('*\t	Descargar\t*') 
+			print ('Seleccione el Tipo de archivo que desea descargar')
+			print ('1 - Archivos de Texto')
+			print ('2 - Imagenes')
+			print ('3 - Regresar al menu anterior')
+			seleccion2 = input('Seleccione una opcion: ')
+			if seleccion2 == '1':
+				os.ruta = ruta
+				na= input('Nombre del archivo: ')
+				test(na)
+				print(input('Pulse una tecla para continuar.'))
+			if seleccion2 == '2':
+				os.ruta = ruta
+				file = input('¿Cual es el nombre del archivo?')
+				mes = ('TYPE I')
+				operacion(mes)
+				envarch(file)
+				print(input('Hit Return'))
+			if seleccion2 == '3':
+				break
+			na= input('Nombre del archivo: ')
+			
 			break
 			
 	if seleccion == '3':
